@@ -52,18 +52,72 @@ public class Admincontroller {
                     }
                     break;
                 case 2:
+                    System.out.println("Updating vehicle details");
+                    System.out.println();
+                    model.displayVehicles();
+                    System.out.println();
+                    System.out.println("Enter vehcile number:");
+                    String vehicle_number=view.value();
+                    do{
+                        System.out.println("1.To Update Vehicle Name  || 2.To Update Vehicle_Number || 3.To Update Vehicle_Type || 4.To Update Vehicle_Rent_Price || 5.To Update Vehicle_Kilometer_Run || 6.To Update Vehicle_Quality || 7.To Update Vehicle_ServiceNeed");
+                        i=view.input();
+                        switch(i){
+                            case 1:
+                                System.out.println("Enter New Vehicle Name:");
+                                String new_vehicleName=view.value();
+                                model.updateVehicleDetails(vehicle_number, new_vehicleName, "vehicle_name");
+                                break;
+                            case 2:
+                                System.out.println("Enter New Vehicle Number:");
+                                String v_new_number=view.value();
+                                model.updateVehicleDetails(vehicle_number, v_new_number, "vehicle_number");
+                                break;
+                            case 3:
+                                System.out.println("Enter New Vehicle Type:");
+                                String new_vehicleType=view.value();
+                                model.updateVehicleDetails(vehicle_number, new_vehicleType, "type");
+                                break;
+                            case 4:
+                                System.out.println("Enter New Vehicle Rent Price:");
+                                String new_rent_price=view.value();
+                                model.updateVehicleDetails(vehicle_number, new_rent_price, "rent_price");
+                                break;
+                            case 5:
+                                System.out.println("Enter New Vehicle Kilometer_Run:");
+                                String new_vh_run=view.value();
+                                model.updateVehicleDetails(vehicle_number, new_vh_run, "kilometer");
+                                break;
+                            case 6:
+                                System.out.println("Enter New Vehicle Quality:");
+                                String new_vehicle_quality=view.value();
+                                model.updateVehicleDetails(vehicle_number, new_vehicle_quality, "condition");
+                                break;
+                            case 7:
+                                System.out.println("Enter New Vehicle Service Need:");
+                                String new_vehicle_service=view.value();
+                                model.updateVehicleDetails(vehicle_number, new_vehicle_service, "service");
+                                break;
+                            case 8:
+                                break;
+                            default:
+                                System.out.println("Invalid Options");
+                                break;
+                        }         
+                    }
+                    while(i!=8);
                     break;
                 case 3:
                     model.displayVehicles();
                     System.out.println("Enter vehicle number:");
-                    String vehicle_number=view.value();
+                    vehicle_number=view.value();
                     model.deleteVehicle(vehicle_number);
                     break;
                 case 4:
                     System.out.println("Displaying vehicles");
-                    int ch=view.input();
+                    int ch;
                     do{
                         System.out.println("1.Display vehicle by name  || 2.Display vehcile by number  || 3.Disply by service need  || 4.Display by price");
+                        ch=view.input();
                         switch(ch){
                             case 1:
                                 model.display("vehicle_name");
@@ -88,9 +142,10 @@ public class Admincontroller {
                     break;
                 case 5:
                     System.out.println("Search vehicles");
-                    int c=view.input();
+                    int c;
                     do{
                         System.out.println("1.Search vehicle by name || 2.Search vehicle by number");
+                        c=view.input();
                         switch(c){
                             case 1:
                                 System.out.println("Enter vehicle name:");
