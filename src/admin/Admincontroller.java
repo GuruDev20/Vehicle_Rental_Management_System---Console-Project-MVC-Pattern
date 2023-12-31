@@ -171,6 +171,56 @@ public class Admincontroller {
                 case 7:
                     break;
                 case 8:
+                    System.out.println("Updating user details...");
+                    System.out.println("Enter email-id");
+                    String email=view.value();
+                    do{
+                        System.out.println("1.To Update Username  || 2.To Update Email  || 3.To Update Mobile_Number  || 4.To Update Aadhaar  || 5.To Update License Number  || 6.To Update Address || 7.To Update Security deposit ");
+                        i=view.input();
+                        switch(i){
+                            case 1:
+                                System.out.println("Enter new Username:");
+                                String newUsername=view.value();
+                                model.updateUserDetails(email, newUsername, "username");
+                                break;
+                            case 2:
+                                System.out.println("Enter new email:");
+                                String newEmail=view.value();
+                                model.updateUserDetails(email, newEmail, "email");
+                                break;
+                            case 3:
+                                System.out.println("Enter new Mobile Number:");
+                                String newMobileNumber=view.value();
+                                model.updateUserDetails(email, newMobileNumber, "mobile");
+                                break;
+                            case 4:
+                                System.out.println("Enter new Aadhaar number:");
+                                String neweAadhaar=view.value();
+                                model.updateUserDetails(email, neweAadhaar, "aadhaar");
+                                break;
+                            case 5:
+                                System.out.println("Enter new License number:");
+                                String license=view.value();
+                                model.updateUserDetails(email, license, "license");
+                                break;
+                            case 6:
+                                System.out.println("Enter New Address:");
+                                String address=view.value();
+                                model.updateUserDetails(email, address, "address");
+                                break;
+                            case 7:
+                                System.out.println("Enter New Security deposit:");
+                                String amount=view.value();
+                                model.updateUserDetails(email, amount, "security");
+                                break;
+                            case 8:
+                                break;
+                            default:
+                                System.out.println("Invalid Options");
+                                break;
+                        }
+                    }
+                    while(i!=8);
                     break;
                 case 9:
                     break;

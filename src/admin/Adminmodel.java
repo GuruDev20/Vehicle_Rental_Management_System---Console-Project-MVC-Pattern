@@ -7,6 +7,7 @@ abstract class Vehicles{
     abstract void display(String key)throws Exception;
     abstract void search(String val,String key)throws Exception;
     abstract void updateVehicleDetails(String vehicle_number,String val,String key)throws Exception;
+    abstract void updateUserDetails(String email,String val,String key)throws Exception;
 }
 public class Adminmodel extends Vehicles{  
     private Connection conn=null;
@@ -66,6 +67,18 @@ public class Adminmodel extends Vehicles{
     public void updateVehicleDetails(String vehicle_number,String val,String key)throws Exception{
         st=conn.createStatement();
         String query = String.format("UPDATE vehicle SET %s = '%s' WHERE vehicle_number = '%s'", key, val, vehicle_number);
+        int updated = st.executeUpdate(query);
+        System.out.printf("Updating %s....", key);
+        if (updated == 1) {
+            Thread.sleep(2000);
+            System.out.printf("Updated %s", key);
+        } else {
+            System.out.printf("Failed to update %s", key);
+        }
+    }
+    public void updateUserDetails(String email,String val,String key)throws Exception{
+        st=conn.createStatement();
+        String query = String.format("UPDATE users SET %s = '%s' WHERE email = '%s'", key, val, email);
         int updated = st.executeUpdate(query);
         System.out.printf("Updating %s....", key);
         if (updated == 1) {
