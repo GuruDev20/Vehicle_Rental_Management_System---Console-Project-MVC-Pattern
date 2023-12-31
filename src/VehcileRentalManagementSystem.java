@@ -52,7 +52,7 @@ class Login extends Users{
                 if(defaultUser.equals("admin")){
                     System.out.println("Admin");
                     Admin admin=Admin.getReference();
-                    //admin.print();
+                    admin.print();
                 }
                 else if(defaultUser.equals("users")){
                     System.out.println("User");

@@ -8,4 +8,10 @@ public class Admin {
         }
         return ref;
     }
+    public void print() throws Exception{
+        Adminmodel model=new Adminmodel();
+        Adminview view=new Adminview();
+        Admincontroller controller=new Admincontroller(model,view);
+        controller.process();
+    }
 }
