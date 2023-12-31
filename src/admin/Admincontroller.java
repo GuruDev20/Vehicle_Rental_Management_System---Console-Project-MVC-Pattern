@@ -167,8 +167,10 @@ public class Admincontroller {
                     while(c!=3);
                     break;
                 case 6:
+                    model.displayRentedVehicles();
                     break;
                 case 7:
+                    model.displayFines();
                     break;
                 case 8:
                     System.out.println("Updating user details...");

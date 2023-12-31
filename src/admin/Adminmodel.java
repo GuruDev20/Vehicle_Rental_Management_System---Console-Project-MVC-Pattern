@@ -8,6 +8,8 @@ abstract class Vehicles{
     abstract void search(String val,String key)throws Exception;
     abstract void updateVehicleDetails(String vehicle_number,String val,String key)throws Exception;
     abstract void updateUserDetails(String email,String val,String key)throws Exception;
+    abstract void displayRentedVehicles()throws Exception;
+    abstract void displayFines()throws Exception;
 }
 public class Adminmodel extends Vehicles{  
     private Connection conn=null;
@@ -87,5 +89,11 @@ public class Adminmodel extends Vehicles{
         } else {
             System.out.printf("Failed to update %s", key);
         }
+    }
+    public void displayRentedVehicles()throws Exception{
+
+    }
+    public void displayFines()throws Exception{
+        
     }
 }
