@@ -9,7 +9,7 @@ public class Admincontroller {
     public void process()throws Exception{
         int i=0;
         do{
-            System.out.println("1.To Add Vehicle  || 2.To Update Vehicle  || 3.To Delete Vehicle  || 4.Display Vehicles by Names || 5.Display Vehicles by Number || 6.Display Vehicles need Services  || 7.Display Vehicles by Price  || 8.Search Vehicle by Name || 9.Search Vehicle by Number_Plate || 10.Display Rented Vehicle || 11.Display Fines || 12.Handle Users");
+            System.out.println("1.To Add Vehicle  || 2.To Update Vehicle  || 3.To Delete Vehicle  || 4.Display Vehicles by Names  || 5.Search Vehicle by Name || 6.Search Vehicle by Number_Plate || 7.Display Rented Vehicle || 8.Display Fines || 9.Handle Users");
             i=view.input();
             switch(i){
                 case 1:
@@ -60,7 +60,31 @@ public class Admincontroller {
                     model.deleteVehicle(vehicle_number);
                     break;
                 case 4:
-                    System.out.println("Enter the ");
+                    System.out.println("Displaying vehicles");
+                    int ch=view.input();
+                    do{
+                        System.out.println("1.Display vehicle by name  || 2.Display vehcile by number  || 3.Disply by service need  || 4.Display by price");
+                        switch(ch){
+                            case 1:
+                                model.display("vehicle_name");
+                                break;
+                            case 2:
+                                model.display("vehicle_number");
+                                break;
+                            case 3:
+                                model.display("service");
+                                break;
+                            case 4:
+                                model.display("rent_price");
+                                break;
+                            case 5:
+                                break;
+                            default:
+                                System.out.println("Invalid Options");
+                                break;
+                        }
+                    }
+                    while(ch!=5);
                     break;
                 case 5:
                     break;
@@ -74,17 +98,11 @@ public class Admincontroller {
                     break;
                 case 10:
                     break;
-                case 11:
-                    break;
-                case 12:
-                    break;
-                case 13:
-                    break;
                 default:
                     System.out.println("Invalid options");
                     break;
             }
         }
-        while(i!=13);
+        while(i!=10);
     }
 }
