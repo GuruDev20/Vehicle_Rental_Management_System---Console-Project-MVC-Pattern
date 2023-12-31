@@ -54,8 +54,13 @@ public class Admincontroller {
                 case 2:
                     break;
                 case 3:
+                    model.displayVehicles();
+                    System.out.println("Enter vehicle number:");
+                    String vehicle_number=view.value();
+                    model.deleteVehicle(vehicle_number);
                     break;
                 case 4:
+                    System.out.println("Enter the ");
                     break;
                 case 5:
                     break;
