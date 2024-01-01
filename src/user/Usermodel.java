@@ -207,5 +207,17 @@ public class Usermodel extends Rentals{
             System.out.println("Serice status successfully.");
         }
     }
+    public void setVehicleQuality(String vehicle_number,String quality,double price,String run)throws Exception{
+        Statement s=conn.createStatement();
+        String query="UPDATE vehicle SET condition='"+quality+"' WHERE vehicle_number='"+vehicle_number+"'";
+        String query1="UPDATE vehicle SET rent_price='"+price+"' WHERE vehicle_number='"+vehicle_number+"'";
+        String query2="UPDATE vehicle SET kilometer='"+run+"' WHERE vehicle_number='"+vehicle_number+"'";
+        int updated = s.executeUpdate(query);
+        int updated1 = s.executeUpdate(query1);
+        int updated2=s.executeUpdate(query2);
+        if(updated==1 && updated1==1 && updated2==1){
+            System.out.println("Vehicle Quality, Rent Price and kilometer run updated successfully.");
+        }
+    }
 
 }
