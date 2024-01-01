@@ -219,5 +219,12 @@ public class Usermodel extends Rentals{
             System.out.println("Vehicle Quality, Rent Price and kilometer run updated successfully.");
         }
     }
-
+    public void updateRentPrice(String email,String vehicle_number,String price)throws Exception{
+        Statement s=conn.createStatement();
+        String query="UPDATE payment SET total_amount ='"+price+"' WHERE vehicle_number ='"+vehicle_number+"' AND user_email ='"+email+"'";
+        int update=s.executeUpdate(query);
+        if(update==1){
+            System.out.println("Vehicle Rent Price updated successfully");
+        }
+    }
 }
