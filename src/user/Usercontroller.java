@@ -52,6 +52,23 @@ public class Usercontroller {
                     model.payFines(email,val,fines);
                     break;
                 case 4:
+                    System.out.println("Do you need to extend your rent for an extra day?");
+                    System.out.println("1. Yes, extend rent || 2. Cancel extension");
+                    int n = view.input();
+                    switch (n) {
+                        case 1:
+                            if (model.canExtendRent(email)) {
+                                model.extendRent(email, 1);
+                            } else {
+                                System.out.println("Sorry, the vehicle cannot be rented for more than 2 days consecutively.");
+                            }
+                            break;
+                        case 2:
+                            break;
+                        default:
+                            System.out.println("Invalid options");
+                            break;
+                    }
                     break;
                 case 5:
                     break;

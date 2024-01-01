@@ -110,4 +110,25 @@ public class Usermodel extends Rentals{
             System.out.println("User not found or no fines to pay for user: " + email);
         }
     }
+    public void extendRent(String email, int numberOfDays) throws Exception {
+        try {
+            Statement s = conn.createStatement();
+            String updateQuery = "UPDATE orders SET return_date = DATE_ADD(return_date, INTERVAL " + numberOfDays + " DAY), rent_count = rent_count + 1 WHERE email = '" + email + "'";
+            int updated = s.executeUpdate(updateQuery);
+            if(updated==1){
+                System.out.println("Rent extended successfully.");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public boolean canExtendRent(String email) throws SQLException {
+        Statement s = conn.createStatement();
+        ResultSet resultSet = s.executeQuery("SELECT rent_count FROM orders WHERE email = '" + email + "'");
+        if (resultSet.next()) {
+            int rentCount = resultSet.getInt("rent_count");
+            return rentCount <= 2;
+        }
+        return false;
+    }
 }
