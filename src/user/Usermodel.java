@@ -15,6 +15,7 @@ abstract class Rentals{
     abstract void viewCart(String email)throws Exception;
     abstract void removeAllVehicle(String email)throws Exception;
     abstract void removeVehicle(String number,String email)throws Exception;
+    abstract void viewHistory(String email)throws Exception;
 }
 public class Usermodel extends Rentals{
     private Connection conn=null;
@@ -163,6 +164,14 @@ public class Usermodel extends Rentals{
             System.out.println("Vehicle removed successfully from the cart for user: " + email);
         } else {
             System.out.println("Vehicle not found in the cart or user not found: " + email);
+        }
+    }
+    public void viewHistory(String email)throws Exception{
+        Statement s=conn.createStatement();
+        String query="SELECT * FROM orders WHERE email='"+email+"'";
+        ResultSet res=s.executeQuery(query);
+        while(res.next()){
+            System.out.println(res.getString(2)+" "+res.getString(3)+" "+res.getString(7)+" "+res.getString(8)+" "+res.getString(9)+" "+res.getString(10));
         }
     }
 }

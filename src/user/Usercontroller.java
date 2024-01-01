@@ -91,6 +91,7 @@ public class Usercontroller {
                 case 6:
                     break;
                 case 7:
+                    model.viewHistory(email);
                     break;
                 case 8:
                     break;
