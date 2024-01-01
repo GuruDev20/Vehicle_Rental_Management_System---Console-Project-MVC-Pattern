@@ -57,7 +57,7 @@ class Login extends Users{
                 else if(defaultUser.equals("users")){
                     System.out.println("User");
                     User user=User.getReference();
-                    //user.print();
+                    user.print();
                 }
                 else{
                     System.out.println("Invalid Default User");
