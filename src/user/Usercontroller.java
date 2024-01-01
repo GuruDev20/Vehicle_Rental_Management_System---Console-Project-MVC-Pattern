@@ -89,6 +89,47 @@ public class Usercontroller {
                     }
                     break;
                 case 6:
+                    System.out.println("Enter vehicle number:");
+                    String v_number = view.value();
+                    System.out.println("Enter vehicle type:");
+                    String typeVehicle = view.value();
+                    System.out.println("Enter return date:");
+                    String date = view.value();
+                    System.out.println("Enter vehicle quality (LOW, MEDIUM, HIGH):");
+                    String quality = view.value();
+                    System.out.println("Enter vehicle kilometer run:");
+                    int run = Integer.parseInt(view.value());
+                    double price = Double.parseDouble(model.fetchRentPrice(v_number));
+                    String return_date = model.returnDate(email, v_number);
+                    if (!date.equals(return_date)) {
+                        price += 0.20 * price;
+                    }
+                    if (run >= 500) {
+                        price += 0.15 * price;
+                    } else if (run >= 1500 && typeVehicle.equals("bike")) {
+                        model.setVehicleServiceStatus(v_number, "YES");
+                    } else if (run >= 3000 && typeVehicle.equals("car")) {
+                        model.setVehicleServiceStatus(v_number, "YES");
+                    }
+                    switch (quality) {
+                        case "LOW":
+                            double change=price-0.20 * price;
+                            price += 0.20 * price;
+                            model.setVehicleQuality(v_number,"LOW",change,String.valueOf(run));
+                            break;
+                        case "MEDIUM":
+                            double change1=price-0.50 * price;
+                            price += 0.50 * price;
+                            model.setVehicleQuality(v_number,"MEDIUM",change1,String.valueOf(run));
+                            break;
+                        case "HIGH":
+                            double change2=price-0.75 * price;
+                            price += 0.75 * price;
+                            model.setVehicleQuality(v_number,"HIGH",change2,String.valueOf(run));
+                            break;
+                    }
+                    model.updateRentPrice(email, v_number, String.valueOf(price));
+                    model.updateVehicleRented("NO",v_number);
                     break;
                 case 7:
                     model.viewHistory(email);

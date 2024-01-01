@@ -16,6 +16,11 @@ abstract class Rentals{
     abstract void removeAllVehicle(String email)throws Exception;
     abstract void removeVehicle(String number,String email)throws Exception;
     abstract void viewHistory(String email)throws Exception;
+    abstract String fetchRentPrice(String vehicle_number)throws Exception;
+    abstract String returnDate(String email,String vehicle_number)throws Exception;
+    abstract void setVehicleServiceStatus(String vehicle_number,String status)throws Exception;
+    abstract void setVehicleQuality(String vehicle_number,String quality,double price,String run)throws Exception;
+    abstract void updateRentPrice(String email,String vehicle_number,String price)throws Exception;
 }
 public class Usermodel extends Rentals{
     private Connection conn=null;
@@ -174,4 +179,25 @@ public class Usermodel extends Rentals{
             System.out.println(res.getString(2)+" "+res.getString(3)+" "+res.getString(7)+" "+res.getString(8)+" "+res.getString(9)+" "+res.getString(10));
         }
     }
+    public String fetchRentPrice(String vehicle_number)throws Exception{
+        String price="";
+        Statement s=conn.createStatement();
+        String query = "SELECT * FROM vehicle WHERE vehicle_number = '" + vehicle_number +"'";
+        ResultSet resultSet = s.executeQuery(query);
+        while (resultSet.next()) {
+            price= resultSet.getString("rent_price");
+        }
+        return price;
+    }
+    public String returnDate(String email,String vehicle_number)throws Exception{
+        String date="";
+        Statement s=conn.createStatement();
+        String query="SELECT * FROM orders WHERE email='"+email+"' AND vehicle_number='"+vehicle_number+"'";
+        ResultSet res=s.executeQuery(query);
+        while(res.next()){
+            date=res.getString("return_date");
+        }
+        return date;
+    }
+
 }
