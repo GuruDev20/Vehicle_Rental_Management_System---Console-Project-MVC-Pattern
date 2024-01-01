@@ -50,14 +50,14 @@ class Login extends Users{
             if(rs.next()){
                 String defaultUser=rs.getString("defaultuser");
                 if(defaultUser.equals("admin")){
-                    System.out.println("Admin");
                     Admin admin=Admin.getReference();
                     admin.print();
                 }
                 else if(defaultUser.equals("users")){
-                    System.out.println("User");
                     User user=User.getReference();
-                    user.print();
+                    String username=rs.getString("username");
+                    String mobile=rs.getString("mobile");
+                    user.print(username, email, mobile);
                 }
                 else{
                     System.out.println("Invalid Default User");

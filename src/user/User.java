@@ -8,10 +8,10 @@ public class User {
         }
         return ref;
     }
-    public void print()throws Exception{
+    public void print(String username,String email,String mobile)throws Exception{
         Usermodel model=new Usermodel();
         Userview view=new Userview();
-        Usercontroller controller=new Usercontroller(model,view);
+        Usercontroller controller=new Usercontroller(model,view,username,email,mobile);
         controller.process();
     }
 }
