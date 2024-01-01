@@ -5,8 +5,9 @@ import java.util.Date;
 abstract class Rentals{
     abstract void displayVehicles()throws Exception;
     abstract String[] fetchVehicleDetails(String str)throws Exception;
-    abstract void rentVehicle(String username,String email,String mobile,String vehicle_name,String vehicle_number,String rent_price)throws Exception;
+    abstract void rentVehicle(String username,String email,String mobile,String vehicle_name,String vehicle_number,String rent_price,String type)throws Exception;
     abstract void updateVehicleRented(String rented,String vehicle_number)throws Exception;
+    abstract void addToCart(String vehicle_name,String vehicle_number,String username,String email,String mobile)throws Exception;
 }
 public class Usermodel extends Rentals{
     private Connection conn=null;
@@ -26,7 +27,7 @@ public class Usermodel extends Rentals{
         }
     }
     public String[] fetchVehicleDetails(String str)throws Exception{
-        String[] arr=new String[3];
+        String[] arr=new String[4];
         Statement s = conn.createStatement();
         String query = "SELECT * FROM vehicle WHERE vehicle_name = '" + str + "' OR vehicle_number = '" + str + "' AND rented='YES'";
         ResultSet resultSet = s.executeQuery(query);
@@ -34,10 +35,11 @@ public class Usermodel extends Rentals{
             arr[0] = resultSet.getString("vehicle_name");
             arr[1] = resultSet.getString("vehicle_number");
             arr[2]= resultSet.getString("rent_price");
+            arr[3]= resultSet.getString("type");
         }
         return arr;
     }
-    public void rentVehicle(String username,String email,String mobile,String vehicle_name,String vehicle_number,String rent_price)throws Exception{
+    public void rentVehicle(String username,String email,String mobile,String vehicle_name,String vehicle_number,String rent_price,String type)throws Exception{
         st=conn.createStatement();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date currentDate = new Date();
@@ -45,7 +47,7 @@ public class Usermodel extends Rentals{
         long returnDateTime = currentDate.getTime() + (24 * 60 * 60 * 1000); 
         Date returnDate = new Date(returnDateTime);
         String returnDateString = new SimpleDateFormat("yyyy-MM-dd 00:00:00").format(returnDate);
-        String rentQuery = "INSERT INTO rented_vehicles(vehicle_name, vehicle_number, vehicle_user, email, mobile, rented,rent_date,return_date) VALUES('" + vehicle_name + "', '" + vehicle_number + "', '" + username + "', '" + email + "', '" + mobile + "', 'YES'"+rentDate+"','"+returnDateString+")";
+        String rentQuery = "INSERT INTO rented_vehicles(vehicle_name, vehicle_number, vehicle_user, email, mobile, type,rent_date,return_date) VALUES('" + vehicle_name + "', '" + vehicle_number + "', '" + username + "', '" + email + "', '" + mobile + "', '"+type+"','"+rentDate+"','"+returnDateString+")";
         int inserted = st.executeUpdate(rentQuery);
         if (inserted == 1) {
             System.out.println("Rented vehicle");
@@ -57,6 +59,14 @@ public class Usermodel extends Rentals{
         int updated=st.executeUpdate(query);
         if(updated==1){
             System.out.println("Vehicle Rented Status updated successfully");
+        }
+    }
+    public void addToCart(String vehicle_name,String vehicle_number,String vehicle_user,String email,String mobile)throws Exception{
+        Statement s = conn.createStatement();
+        String query = "INSERT INTO cart(vehicle_name, vehicle_number, vehicle_user,email,mobile) " +"VALUES('" + vehicle_name + "', '" + vehicle_number + "', '"+vehicle_user+"','"+email+"','"+mobile+"')";
+        int inserted = s.executeUpdate(query);
+        if (inserted == 1) {
+            System.out.println("Added to cart");
         }
     }
 }

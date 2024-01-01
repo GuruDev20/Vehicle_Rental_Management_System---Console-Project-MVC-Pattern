@@ -28,15 +28,16 @@ public class Usercontroller {
                     String vehicle_name=arr[0];
                     String vehicle_number=arr[1];
                     String rent_price=arr[2];
+                    String type=arr[3];
                     System.out.println("1.To Rent a vehicle  || 2.Add vehicle to cart");
                     int k=view.input();
                     switch(k){
                         case 1:
-                            model.rentVehicle(username,email,mobile,vehicle_name,vehicle_number,rent_price);
+                            model.rentVehicle(username,email,mobile,vehicle_name,vehicle_number,rent_price,type);
                             model.updateVehicleRented("YES",vehicle_number);
                             break;
                         case 2:
-                            //model.addToCart(email,vehicle_number,"0",0);
+                            model.addToCart(vehicle_name,vehicle_number,username,email,mobile);
                             model.updateVehicleRented("YES",vehicle_number);
                             break;
                         default:
