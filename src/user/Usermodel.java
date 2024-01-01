@@ -10,6 +10,11 @@ abstract class Rentals{
     abstract void addToCart(String vehicle_name,String vehicle_number,String rent_price,String username,String email,String mobile)throws Exception;
     abstract String displayFinesToPay(String email)throws Exception;
     abstract void payFines(String email,String val,String fines)throws Exception;
+    abstract void extendRent(String email,int numberOfDays)throws Exception;
+    abstract boolean canExtendRent(String email)throws Exception;
+    abstract void viewCart(String email)throws Exception;
+    abstract void removeAllVehicle(String email)throws Exception;
+    abstract void removeVehicle(String number,String email)throws Exception;
 }
 public class Usermodel extends Rentals{
     private Connection conn=null;
@@ -130,5 +135,34 @@ public class Usermodel extends Rentals{
             return rentCount <= 2;
         }
         return false;
+    }
+    public void viewCart(String email)throws Exception{
+        Statement s=conn.createStatement();
+        String query = "SELECT * FROM cart WHERE email = '" + email + "'";
+        ResultSet res = s.executeQuery(query);
+        while (res.next()){
+            System.out.println(res.getString(3)+" "+res.getString(4)+" "+res.getString(5)+" "+res.getString(6));
+        }
+    }
+    public void removeAllVehicle(String email)throws Exception{
+        Statement s=conn.createStatement();
+        String query="DELETE FROM cart WHERE email='"+email+"'";
+        int deleted=s.executeUpdate(query);
+        if(deleted==1){
+            System.out.println("deleted");
+        }
+        else{
+            System.out.println("Error in deleting");
+        }
+    }
+    public void removeVehicle(String number,String email)throws Exception{
+        Statement s = conn.createStatement();
+        String query = "DELETE FROM cart WHERE email = '" + email + "' AND vehicle_number = '" + number + "'";
+        int rowsAffected = s.executeUpdate(query);
+        if (rowsAffected > 0) {
+            System.out.println("Vehicle removed successfully from the cart for user: " + email);
+        } else {
+            System.out.println("Vehicle not found in the cart or user not found: " + email);
+        }
     }
 }

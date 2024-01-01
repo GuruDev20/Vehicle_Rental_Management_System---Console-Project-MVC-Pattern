@@ -71,6 +71,22 @@ public class Usercontroller {
                     }
                     break;
                 case 5:
+                    model.viewCart(email);
+                    System.out.println("1.Remove all from cart || 2.Enter a vehicle number to remove");
+                    int number=view.input();
+                    switch(number){
+                        case 1:
+                            model.removeAllVehicle(email); 
+                            break;
+                        case 2:
+                            System.out.println("Enter vehicle number:");
+                            String num=view.value();
+                            model.removeVehicle(num,email);
+                            break;
+                        default:
+                            System.out.println("Invalid options");
+                            break;
+                    }
                     break;
                 case 6:
                     break;
