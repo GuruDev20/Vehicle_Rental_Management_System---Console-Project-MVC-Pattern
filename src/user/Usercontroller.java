@@ -37,7 +37,7 @@ public class Usercontroller {
                             model.updateVehicleRented("YES",vehicle_number);
                             break;
                         case 2:
-                            model.addToCart(vehicle_name,vehicle_number,username,email,mobile);
+                            model.addToCart(vehicle_name,vehicle_number,rent_price,username,email,mobile);
                             model.updateVehicleRented("YES",vehicle_number);
                             break;
                         default:
@@ -46,6 +46,10 @@ public class Usercontroller {
                     }
                     break;
                 case 3:
+                    String fines=model.displayFinesToPay(email);
+                    System.out.println("Enter fine amount:");
+                    String val=view.value();
+                    model.payFines(email,val,fines);
                     break;
                 case 4:
                     break;

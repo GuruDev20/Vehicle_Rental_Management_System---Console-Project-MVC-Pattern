@@ -7,7 +7,9 @@ abstract class Rentals{
     abstract String[] fetchVehicleDetails(String str)throws Exception;
     abstract void rentVehicle(String username,String email,String mobile,String vehicle_name,String vehicle_number,String rent_price,String type)throws Exception;
     abstract void updateVehicleRented(String rented,String vehicle_number)throws Exception;
-    abstract void addToCart(String vehicle_name,String vehicle_number,String username,String email,String mobile)throws Exception;
+    abstract void addToCart(String vehicle_name,String vehicle_number,String rent_price,String username,String email,String mobile)throws Exception;
+    abstract String displayFinesToPay(String email)throws Exception;
+    abstract void payFines(String email,String val,String fines)throws Exception;
 }
 public class Usermodel extends Rentals{
     private Connection conn=null;
@@ -78,12 +80,34 @@ public class Usermodel extends Rentals{
             System.out.println("Vehicle Rented Status updated successfully");
         }
     }
-    public void addToCart(String vehicle_name,String vehicle_number,String vehicle_user,String email,String mobile)throws Exception{
+    public void addToCart(String vehicle_name,String vehicle_number,String rent_price,String vehicle_user,String email,String mobile)throws Exception{
         Statement s = conn.createStatement();
-        String query = "INSERT INTO cart(vehicle_name, vehicle_number, vehicle_user,email,mobile) " +"VALUES('" + vehicle_name + "', '" + vehicle_number + "', '"+vehicle_user+"','"+email+"','"+mobile+"')";
+        String query = "INSERT INTO cart(vehicle_name, vehicle_number, rent_price,vehicle_user,email,mobile) " +"VALUES('" + vehicle_name + "', '" + vehicle_number + "', '"+vehicle_user+"','"+email+"','"+mobile+"')";
         int inserted = s.executeUpdate(query);
         if (inserted == 1) {
             System.out.println("Added to cart");
+        }
+    }
+    public String displayFinesToPay(String email)throws Exception{
+        String fines="";
+        st=conn.createStatement();
+        String query="SELECT fines FROM payment WHERE email='" + email + "'";
+        ResultSet resultSet = st.executeQuery(query);
+        while (resultSet.next()) {
+            fines+= resultSet.getString("fines");
+            System.out.println("Fines to Pay: " + fines);
+        }
+        return fines;
+    }
+    public void payFines(String email,String val,String fines)throws Exception{
+        double fineVal=Double.parseDouble(val);
+        double currentFines=Double.parseDouble(fines);
+        st=conn.createStatement();
+        String query="UPDATE payment SET fines='"+(currentFines-fineVal)+"'' WHERE email='" + email+"'";        int rowsAffected = st.executeUpdate(query);
+        if (rowsAffected > 0) {
+            System.out.println("Fines paid successfully");
+        } else {
+            System.out.println("User not found or no fines to pay for user: " + email);
         }
     }
 }
