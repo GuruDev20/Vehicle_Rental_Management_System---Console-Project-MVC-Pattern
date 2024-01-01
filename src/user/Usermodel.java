@@ -199,5 +199,13 @@ public class Usermodel extends Rentals{
         }
         return date;
     }
+    public void setVehicleServiceStatus(String vehicle_number,String status)throws Exception{
+        Statement s=conn.createStatement();
+        String query="UPDATE vehicle SET service='"+status+"' WHERE vehicle_number='"+vehicle_number+"'";
+        int updated = s.executeUpdate(query);
+        if(updated==1){
+            System.out.println("Serice status successfully.");
+        }
+    }
 
 }
