@@ -41,16 +41,33 @@ public class Usermodel extends Rentals{
     }
     public void rentVehicle(String username,String email,String mobile,String vehicle_name,String vehicle_number,String rent_price,String type)throws Exception{
         st=conn.createStatement();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date currentDate = new Date();
-        String rentDate = dateFormat.format(currentDate);
-        long returnDateTime = currentDate.getTime() + (24 * 60 * 60 * 1000); 
-        Date returnDate = new Date(returnDateTime);
-        String returnDateString = new SimpleDateFormat("yyyy-MM-dd 00:00:00").format(returnDate);
-        String rentQuery = "INSERT INTO rented_vehicles(vehicle_name, vehicle_number, vehicle_user, email, mobile, type,rent_date,return_date) VALUES('" + vehicle_name + "', '" + vehicle_number + "', '" + username + "', '" + email + "', '" + mobile + "', '"+type+"','"+rentDate+"','"+returnDateString+")";
-        int inserted = st.executeUpdate(rentQuery);
-        if (inserted == 1) {
-            System.out.println("Rented vehicle");
+        int minDeposit=0;
+        if("bike".equals(type)){
+            minDeposit=3000;
+        }
+        else if("car".equals(type)){
+            minDeposit=10000;
+        }
+        String q1="SELECT * FROM users WHERE email='"+email+"'";
+        ResultSet rs=st.executeQuery(q1);
+        if(rs.next()){
+            int userDeposit=rs.getInt("security");
+            if(userDeposit<minDeposit){
+                System.out.println("Insufficient security deposit");
+            }
+            else{
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date currentDate = new Date();
+                String rentDate = dateFormat.format(currentDate);
+                long returnDateTime = currentDate.getTime() + (24 * 60 * 60 * 1000); 
+                Date returnDate = new Date(returnDateTime);
+                String returnDateString = new SimpleDateFormat("yyyy-MM-dd 00:00:00").format(returnDate);
+                String rentQuery = "INSERT INTO orders(vehicle_name, vehicle_number, vehicle_user, email, mobile, type,rent_date,return_date) VALUES('" + vehicle_name + "', '" + vehicle_number + "', '" + username + "', '" + email + "', '" + mobile + "', '"+type+"','"+rentDate+"','"+returnDateString+")";
+                int inserted = st.executeUpdate(rentQuery);
+                if (inserted == 1) {
+                    System.out.println("Rented vehicle");
+                }
+            }
         }
     }
     public void updateVehicleRented(String rented,String vehicle_number)throws Exception{
